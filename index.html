@@ -1,1 +1,541 @@
-<h1>hi</h1>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>يوزر فلو — رحلة حجز الزيارة الطبية المنزلية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#12192e;
+    --navy-800:#1a2547;
+    --navy-700:#233266;
+    --paper:#f6f4ee;
+    --card:#ffffff;
+    --ink:#1c2333;
+    --muted:#6b7280;
+    --line:#e2ddd0;
+    --teal:#0f8b8d;
+    --teal-soft:#e3f4f2;
+    --amber:#e2932f;
+    --amber-soft:#fbf0e0;
+    --green:#2f9e63;
+    --green-soft:#e6f5ec;
+    --customer:#c2513c;
+    --customer-soft:#fbeae6;
+    --gallabox:#3f8f4f;
+    --gallabox-soft:#eaf6ec;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(15,139,141,0.06), transparent 40%),
+      radial-gradient(circle at 90% 60%, rgba(226,147,47,0.05), transparent 45%);
+    font-family:'Tajawal', sans-serif;
+    color:var(--ink);
+    line-height:1.7;
+    padding:48px 20px 90px;
+  }
+
+  .wrap{max-width:980px;margin:0 auto;}
+
+  /* ---------- Header ---------- */
+  header{
+    text-align:center;
+    margin-bottom:44px;
+  }
+  .eyebrow{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.12em;
+    color:var(--teal);
+    background:var(--teal-soft);
+    display:inline-block;
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:clamp(28px,4vw,42px);
+    color:var(--navy-900);
+    margin:0 0 12px;
+  }
+  header p.sub{
+    color:var(--muted);
+    font-size:16px;
+    max-width:620px;
+    margin:0 auto;
+  }
+
+  /* ---------- Legend ---------- */
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin:30px 0 54px;
+  }
+  .legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    padding:8px 14px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--card);
+  }
+  .dot{width:10px;height:10px;border-radius:50%;flex:none;}
+  .dot.call{background:var(--navy-700);}
+  .dot.cust{background:var(--customer);}
+  .dot.field{background:var(--teal);}
+  .dot.wa{background:var(--gallabox);}
+
+  /* ---------- Timeline ---------- */
+  .timeline{
+    position:relative;
+    padding-inline-end:34px; /* space for spine on the right in RTL */
+  }
+  .spine{
+    position:absolute;
+    top:6px;
+    bottom:6px;
+    right:11px;
+    width:2px;
+    background:repeating-linear-gradient(var(--line),var(--line) 6px, transparent 6px, transparent 11px);
+  }
+  .pulse{
+    position:absolute;
+    top:0; right:0;
+    width:22px;
+    overflow:visible;
+  }
+
+  .phase-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.08em;
+    color:var(--navy-700);
+    margin:46px 0 16px;
+    padding-right:36px;
+    position:relative;
+  }
+  .phase-label:first-child{margin-top:0;}
+
+  .step{
+    position:relative;
+    padding-right:34px;
+    margin-bottom:22px;
+  }
+  .node{
+    position:absolute;
+    top:22px;
+    right:2px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--card);
+    border:3px solid var(--navy-700);
+    z-index:2;
+  }
+  .step.customer .node{border-color:var(--customer);}
+  .step.field .node{border-color:var(--teal);}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:20px 24px;
+    box-shadow:0 1px 2px rgba(20,20,30,.03);
+  }
+  .card .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:4px 11px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .tag.call{background:#eef0f8;color:var(--navy-700);}
+  .tag.cust{background:var(--customer-soft);color:var(--customer);}
+  .tag.field{background:var(--teal-soft);color:var(--teal);}
+  .tag.wa{background:var(--gallabox-soft);color:var(--gallabox);}
+
+  .card h3{
+    font-family:'Cairo', sans-serif;
+    font-size:17px;
+    font-weight:700;
+    margin:0 0 6px;
+    color:var(--navy-900);
+  }
+  .card p{margin:6px 0;color:#3a4152;font-size:14.5px;}
+  .card ul{margin:8px 0 0;padding-inline-start:20px;font-size:14.5px;color:#3a4152;}
+  .card li{margin-bottom:4px;}
+
+  .status-pill{
+    display:inline-block;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    padding:3px 12px;
+    border-radius:7px;
+    background:var(--navy-900);
+    color:#fff;
+    margin:2px 4px 2px 0;
+  }
+  .status-pill.amber{background:var(--amber);}
+  .status-pill.green{background:var(--green);}
+  .status-pill.muted{background:#8992a6;}
+
+  /* branch box */
+  .branch{
+    margin-top:14px;
+    border-inline-start:3px dashed var(--line);
+    padding-inline-start:16px;
+    display:grid;
+    gap:10px;
+  }
+  .branch-title{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    color:var(--muted);
+    letter-spacing:.02em;
+  }
+  .branch-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .opt{
+    background:var(--amber-soft);
+    color:#8a5a13;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    padding:6px 13px;
+    border-radius:9px;
+    border:1px solid #f0dcb4;
+  }
+
+  .subcard{
+    background:#fbfaf7;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 18px;
+  }
+  .subcard h4{
+    font-family:'Cairo',sans-serif;
+    font-size:14px;
+    margin:0 0 6px;
+    color:var(--navy-900);
+  }
+  .subcard p{font-size:13.5px;margin:4px 0;color:#3a4152;}
+
+  /* optional flow: additional services */
+  .optional-flow{
+    margin-top:38px;
+    border:1.5px dashed #cfd4de;
+    border-radius:18px;
+    padding:26px 26px 10px;
+    background:repeating-linear-gradient(135deg, rgba(0,0,0,0.012) 0 12px, transparent 12px 24px);
+  }
+  .optional-flow > .flow-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .flow-head .badge{
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    color:var(--amber);
+    background:var(--amber-soft);
+    padding:4px 12px;
+    border-radius:999px;
+  }
+  .flow-head h3{
+    font-family:'Cairo',sans-serif;
+    font-size:16px;
+    margin:0;
+    color:var(--navy-900);
+  }
+
+  /* end marker */
+  .end-marker{
+    text-align:center;
+    margin-top:52px;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    color:var(--teal);
+    font-size:14px;
+  }
+  .end-marker::before{
+    content:'';
+    display:block;
+    width:2px;height:26px;
+    background:var(--line);
+    margin:0 auto 10px;
+  }
+
+  footer{
+    text-align:center;
+    margin-top:60px;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+
+  @media (max-width:640px){
+    .card{padding:16px 18px;}
+    .step{padding-right:28px;}
+    .node{width:16px;height:16px;top:20px;}
+  }
+
+  @media print{
+    body{background:#fff;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">USER FLOW — للمبرمج</span>
+    <h1>رحلة الحجز: من اتصال العميل حتى تقييم الخدمة</h1>
+    <p class="sub">خريطة تدفق العمل الحالي بين العميل، الكول سنتر (CRM)، مزوّد الخدمة/الفريق الطبي، وقناة واتساب (Gallabox) — لتوثيق المنطق قبل البرمجة.</p>
+  </header>
+
+  <div class="legend">
+    <span><i class="dot call"></i> الكول سنتر / CRM</span>
+    <span><i class="dot cust"></i> العميل</span>
+    <span><i class="dot field"></i> مزوّد الخدمة / الفريق الطبي</span>
+    <span><i class="dot wa"></i> Gallabox (واتساب)</span>
+  </div>
+
+  <div class="timeline">
+    <div class="spine"></div>
+
+    <div class="phase-label">١ · التواصل والفتح على النظام</div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>استقبال تواصل العميل</h3>
+        <p>العميل يتواصل عن طريق: برنامج الاتصال، جوال د. عامر، أو Gallabox. الكول سنتر يأخذ رقم تليفون العميل ويفتحه في الـ CRM.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>Create Appointment</h3>
+        <p>تسجيل البيانات الأساسية: المدينة – الخدمة – وصف الحالة، ثم الضغط على <strong>Create</strong>.</p>
+        <p>بمجرد الحفظ، ينزل الطلب في النظام تلقائيًا بحالة <span class="status-pill muted">New Order</span>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر → مزوّد الخدمة</span>
+        <h3>تحويل الطلب لمزوّد الخدمة</h3>
+        <p>يتم إرسال الطلب لمزوّد الخدمة عبر إحدى قناتين:</p>
+        <div class="branch-options">
+          <span class="opt">تطبيق مزوّد الخدمة</span>
+          <span class="opt">تنويه واتساب</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-label">٢ · تحديد الموعد والتحقق من بيانات العميل</div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>تحديد أقرب موعد متاح</h3>
+        <p>بعد ما يشوف الكول سنتر أقرب معاد، يرجع يبلغ العميل بيه، فلو مناسب يكمل معاه باقي البيانات.</p>
+        <p>يغيّر Patient Status إلى: <span class="status-pill amber">Under Revision</span></p>
+        <ul>
+          <li>الحالة تنعكس عند العميل مباشرة داخل محادثة Gallabox.</li>
+          <li>يُرسل للعميل طلب بيانات: الاسم الثلاثي / رقم الهوية / تاريخ الميلاد.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>تسجيل بيانات العميل والموقع</h3>
+        <p>بعد استلام البيانات من العميل، يضيفها الكول سنتر داخل الـ CMS، ثم يضيف اللوكيشن الخاص بالزيارة.</p>
+      </div>
+    </div>
+
+    <div class="phase-label">٣ · الفوترة والدفع</div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>إرسال الفاتورة</h3>
+        <p>يغيّر Patient Status إلى: <span class="status-pill amber">Invoice Sent</span> — ويُرسل للعميل تفاصيل الخدمة والسعر الإجمالي.</p>
+
+        <div class="branch">
+          <div class="branch-title">طرق الدفع المتاحة للعميل</div>
+          <div class="branch-options">
+            <span class="opt">تيلر (Teller)</span>
+            <span class="opt">تحويل بنكي</span>
+            <span class="opt">كاش عند وصول الفريق الطبي</span>
+          </div>
+          <div class="subcard">
+            <h4>حالة الدفع عبر تيلر</h4>
+            <p>عمود <strong>Transaction Status</strong> يتحول تلقائيًا إلى <span class="status-pill green">Successful</span>، ويصل للعميل إيميل تأكيد بإتمام الدفع.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>تأكيد استلام السداد</h3>
+        <p>بعد التأكد من إتمام السداد (تيلر / تحويل / كاش)، يغيّر Patient Status إلى: <span class="status-pill green">Payment Completed</span></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>تأكيد الموعد</h3>
+        <p>يغيّر Patient Status مرة أخرى إلى: <span class="status-pill">Order Confirmed</span></p>
+      </div>
+    </div>
+
+    <div class="phase-label">٤ · تحرّك الفريق الطبي</div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر → مزوّد الخدمة</span>
+        <h3>بدء تحرك الفريق</h3>
+        <p>يغيّر Patient Status إلى: <span class="status-pill">Medical Team On The Way</span></p>
+        <ul>
+          <li>يُرسل للعميل قائمة الأسعار عبر Gallabox.</li>
+          <li>يُرسل النموذج لمزوّد الخدمة، فيبدأ الفريق الطبي بالتحرك للموقع.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step field">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag field">مزوّد الخدمة / الفريق الطبي</span>
+        <h3>وصول الفريق</h3>
+        <p>عند وصول الفريق الطبي لموقع العميل، يُبلّغ الكول سنتر بذلك.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>تحديث حالة الوصول</h3>
+        <p>يغيّر Patient Status إلى: <span class="status-pill">Medical Team Arrived</span> — تنعكس الحالة مباشرة عند العميل داخل الشات.</p>
+      </div>
+    </div>
+
+    <div class="end-marker">↓ فرع اختياري: تنفَّذ الخطوات التالية فقط إذا وجد الفريق خدمات إضافية أثناء الزيارة</div>
+  </div>
+
+  <!-- Optional branch: additional services -->
+  <div class="optional-flow">
+    <div class="flow-head">
+      <span class="badge">فرع اختياري</span>
+      <h3>اكتشاف خدمات إضافية أثناء الزيارة</h3>
+    </div>
+
+    <div class="timeline" style="padding-inline-end:34px;">
+      <div class="spine"></div>
+
+      <div class="step field">
+        <span class="node"></span>
+        <div class="card">
+          <span class="tag field">مزوّد الخدمة / الفريق الطبي</span>
+          <h3>اكتشاف حاجة لخدمة إضافية</h3>
+          <p>الفريق الطبي يُبلّغ الكول سنتر بوجود خدمة إضافية مطلوبة غير مدرجة في الطلب الأصلي.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="node"></span>
+        <div class="card">
+          <span class="tag call">الكول سنتر</span>
+          <h3>إنشاء Child Appointment</h3>
+          <p>من زر <strong>Actions</strong> في صف الطلب الأصلي، يقوم الكول سنتر بإنشاء موعد فرعي (Child Appointment) ثم يضيف الخدمات الإضافية المطلوبة.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="node"></span>
+        <div class="card">
+          <span class="tag call">الكول سنتر</span>
+          <h3>طلب دفع الخدمات الإضافية</h3>
+          <p>يغيّر Patient Status إلى: <span class="status-pill amber">Scheduling Additional Services</span></p>
+          <p>يصل للعميل رسالة لإكمال دفع قيمة الخدمات الإضافية.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="node"></span>
+        <div class="card">
+          <span class="tag call">الكول سنتر</span>
+          <h3>تأكيد السداد</h3>
+          <p>بعد سداد العميل، يغيّر Patient Status إلى: <span class="status-pill green">Payment Completed</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Closing step -->
+  <div class="timeline" style="margin-top:38px;padding-inline-end:34px;">
+    <div class="spine"></div>
+    <div class="phase-label">٥ · إغلاق الطلب</div>
+    <div class="step">
+      <span class="node"></span>
+      <div class="card">
+        <span class="tag call">الكول سنتر</span>
+        <h3>تقييم الخدمة (يدوي)</h3>
+        <p>بعد انتهاء الخدمة ومغادرة الفريق الطبي، يقوم الكول سنتر برفع تقييم الخدمة (Service Rating) — هذه الخطوة تُنفَّذ يدويًا حاليًا.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="end-marker">نهاية الرحلة</div>
+
+  <footer>
+    مرجعية: شاشة Daily Transaction Report وعمود Patient Status في الـ CMS (٢٠ يوليو ٢٠٢٦) — القيم بين علامتي [ ] تطابق أسماء الحالات كما تظهر فعليًا في النظام.
+  </footer>
+
+</div>
+</body>
+</html>
